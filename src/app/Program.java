@@ -41,24 +41,24 @@ public class Program {
                 double price = Double.parseDouble(fields[1]); //Envia para a variavel price o indice 1 que contém o preço
                 int quantity = Integer.parseInt(fields[2]);  //Envia para a variavel quantity o indice 2 que contém o valor
 
-                list.add(new Product(name, price, quantity));
+                list.add(new Product(name, price, quantity)); //Instancia os objetos 
 
                 itemCsv = br.readLine(); //Após printar pula pra outra linha
             }
 
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(targetFileStr))) {
-                for (Product item: list){
-                    bw.write(item.getName() + "," + String.format("%.2f", item.totalValue()));
-                    bw.newLine();
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(targetFileStr))) { //Caso tudo tenha ocorrido bem no primeiro try, entra no segundo para escrever no arquivo summary.csv
+                for (Product item: list){ //percorre a lista
+                    bw.write(item.getName() + "," + String.format("%.2f", item.totalValue())); //pra cada item da lista, escreve no summary.csv
+                    bw.newLine(); //Pula uma linha
                 }
-                System.out.println(targetFileStr + "CREATED");
+                System.out.println(targetFileStr + " CREATED"); //Printa caso tudo tenha ocorrido bem
             }
-            catch (IOException e) {
-                System.out.println("Error writing file: " + e.getMessage());
+            catch (IOException e) { //Chama a excessao caso dê erro no segundo try
+                System.out.println("Error writing file: " + e.getMessage()); //Printa a mensagem de erro
             }
         }
-        catch (IOException e){
-            System.out.println("Error writing file: " + e.getMessage());
+        catch (IOException e){ //Chama a excessao caso o arquivo não exista ou o caminho esteja errado
+            System.out.println("Error writing file: " + e.getMessage()); //Printa a mensagem de erro
         }
 
         sc.close();
